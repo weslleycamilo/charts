@@ -73,9 +73,7 @@ deployment:
     type: ClusterIP
     port: 80
 
-  nodeSelector:
-    linx/worker-group: general
-    # ec2/lifecycle: spot
+  nodeSelector: []
 
   tolerations: []
 
