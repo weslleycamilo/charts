@@ -1,0 +1,13 @@
+{{- if .Values.rbac.enabled }}
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: {{ .Release.Name }}
+rules:
+- apiGroups:
+  - ""
+  resources:
+{{ toYaml .Values.rbac.rules.resources | indent 12 }}
+  verbs:
+{{ toYaml .Values.rbac.rules.verbs | indent 12 }}
+{{ end }}

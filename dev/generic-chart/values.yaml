@@ -1,0 +1,89 @@
+# Default values for linx.
+
+###################################
+# Generic values of the templates #
+###################################
+
+# Define any image here.
+image:
+  repository: nginx
+  tag: 'latest'
+  pullPolicy: IfNotPresent
+
+tolerations: []
+# - key: node-role.kubernetes.io/master
+#   effect: NoSchedule
+
+# configuration for environment variables
+env: []
+  # - name: ENV
+  #   value: staging
+
+
+replicaCount: 1
+
+# Application port/ docker bind port
+appPort: 5000
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  limits:
+   cpu: 100m
+   memory: 128Mi
+  requests:
+   cpu: 100m
+   memory: 128Mi
+
+rbac:
+  enabled: false
+  # rules:
+  #   resources:
+  #   - pods
+  #   - namespaces
+  #   verbs:
+  #   - get
+  #   - list
+  #   - watch
+
+
+#####################################
+# Values of the deployment template #
+#####################################
+
+deployment:
+  enabled: true
+
+  # configuration for livenessProbe and readinessProbe probe
+  livenessProbe: []
+  # Below you can find an example but for more examples follow to the
+  # official documentation:
+  # https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
+    # httpGet:
+    #   port: http
+    #   delay: 5
+    #   period: 5
+    #   path: /
+
+  readinessProbe: []
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  nodeSelector:
+    linx/worker-group: general
+    # ec2/lifecycle: spot
+
+  tolerations: []
+
+  affinity: {}
+
+#####################################
+# Values of the DaemonSet template  #
+#####################################
+
+daemonset:
+  enabled: false
